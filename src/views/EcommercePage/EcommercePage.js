@@ -14,9 +14,8 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import Footer from "components/Footer/Footer.js";
 // sections for this page
 import HeaderLinks from "components/Header/HeaderLinks.js";
-import SectionLatestOffers from "views/EcommercePage/Sections/SectionLatestOffers.js";
-import SectionProducts from "views/EcommercePage/Sections/SectionProducts.js";
-// import SectionBlog from "views/EcommercePage/Sections/SectionBlog.js";
+import SectionLatestOffers from "views/EcommercePage/Sections/LastestOffers/SectionLatestOffers.js";
+import SectionProducts from "views/EcommercePage/Sections/Products/SectionProducts.js";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
@@ -30,8 +29,9 @@ import logoFooter from "assets/img/ecommerce/logo-foot.png";
 import afip from "assets/img/ecommerce/afip.jpg";
 
 import styles from "assets/jss/material-kit-pro-react/views/ecommerceStyle.js";
-import SectionCategories from "./Sections/SectionCategories";
+import SectionCategories from "./Sections/Categories/SectionCategories";
 import { Link } from "react-router-dom";
+import { useFetch } from "./hooks/useFetch/useFetch";
 
 
 const useStyles = makeStyles(styles);
@@ -41,6 +41,10 @@ export default function EcommercePage() {
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
   });
+
+  const {data, loading} = useFetch('/api/v1/home-page');
+  
+
   const classes = useStyles();
   return (
     <div>
@@ -82,12 +86,11 @@ export default function EcommercePage() {
       </Parallax>
 
       <div className={classNames(classes.main, classes.mainRaised)}>
-        <SectionLatestOffers />
+        <SectionLatestOffers loading={loading} highlightProducts={data?.highlightProducts} />
         <SectionProducts />
       </div>
       {/* CATEGORIAS ACA */}
-      <SectionCategories />
-      {/* <SectionBlog /> */}
+      <SectionCategories loading={loading} categories={data?.categories} />
       <div
         className={classNames(
           classes.subscribeLine,
