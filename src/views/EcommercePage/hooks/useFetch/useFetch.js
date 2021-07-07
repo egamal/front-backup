@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-export const useFetch = (url) => {
+export default function useFetch(url) {
     const isMounted = useRef(true);
 
     const [state, setState] = useState({

@@ -5,22 +5,23 @@ import GridContainer from 'components/Grid/GridContainer.js';
 import { makeStyles } from '@material-ui/core/styles';
 
 import styles from 'assets/jss/material-kit-pro-react/views/ecommerceSections/latestOffersStyle.js';
-import { HighlightProduct } from './components/HighlightProduct';
+import getGridContent from 'views/EcommercePage/helpers/getGridContent';
+import ProductCard from '../ProductCard';
+
 
 const useStyles = makeStyles(styles);
 
-export default function SectionLatestOffers({ loading, highlightProducts }) {
-  const classes = useStyles();
+export default function SectionLatestOffers({ loading, highlightProducts = [] }) {
+  const classes = useStyles(); 
+
+  const gridContent = getGridContent(loading, highlightProducts, ProductCard);
+
   return (
     <div className={classes.section}>
       <div className={classes.container}>
-        <h2>Latest Offers</h2>
+        <h2>Productos Destacados</h2>
         <GridContainer>
-          {loading
-            ? 'Loading...'
-            : highlightProducts.map((product) => (
-                <HighlightProduct key={product.name} {...product} />
-              ))}
+          {gridContent}
         </GridContainer>
       </div>
     </div>

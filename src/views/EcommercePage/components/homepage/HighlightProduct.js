@@ -18,7 +18,7 @@ import { Add, Remove } from '@material-ui/icons';
 
 const useStyles = makeStyles(styles);
 
-export const HighlightProduct = ({ imageUri, name, price, size }) => {
+export default function HighlightProduct({ imageUri, name, price, size, description }) {
   const [quantity, setQuantity] = useState(1);
 
   const handleQuantityChange = ({ target }) => {
@@ -40,14 +40,15 @@ export const HighlightProduct = ({ imageUri, name, price, size }) => {
     <GridItem md={4} sm={6}>
       <Card product plain>
         <CardHeader image plain>
-          <a href='#pablo'>
-            <img src={imageUri} alt={name} />
+          <a href='#pablo' style={{display: "flex", justifyContent: "center"}}>
+            <img src={imageUri} alt={name} style={{height: "250px", width:"250px"}} />
           </a>
           <div
             className={classes.coloredShadow}
             style={{
               backgroundImage: `url(${imageUri})`,
               opacity: 1,
+              height: "250px", width:"auto"
             }}
           />
           <span className={classes.discount}>-20%</span>
