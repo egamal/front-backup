@@ -94,6 +94,12 @@ const styles = {
   textLeft: {
     textAlign: "left"
   },
+  backgroundWhite: {
+    backgroundColor: "white",
+  },
+  widthAuto: {
+    width: "auto",
+  },
 };
 
 export default styles;
