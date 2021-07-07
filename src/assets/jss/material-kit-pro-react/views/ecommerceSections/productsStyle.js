@@ -99,7 +99,7 @@ const styles = {
   },
   widthAuto: {
     width: "auto",
-  },
+  }
 };
 
 export default styles;
