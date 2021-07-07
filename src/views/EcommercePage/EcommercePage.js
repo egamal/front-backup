@@ -14,8 +14,9 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import Footer from "components/Footer/Footer.js";
 // sections for this page
 import HeaderLinks from "components/Header/HeaderLinks.js";
-import SectionLatestOffers from "views/EcommercePage/Sections/LastestOffers/SectionLatestOffers.js";
-import SectionProducts from "views/EcommercePage/Sections/Products/SectionProducts.js";
+import SectionLatestOffers from "./components/homepage/SectionLatestOffers.js";
+import SectionProducts from "./components/homepage/SectionProducts.js";
+import SectionCategories from "./components/homepage/SectionCategories.js";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
@@ -29,9 +30,10 @@ import logoFooter from "assets/img/ecommerce/logo-foot.png";
 import afip from "assets/img/ecommerce/afip.jpg";
 
 import styles from "assets/jss/material-kit-pro-react/views/ecommerceStyle.js";
-import SectionCategories from "./Sections/Categories/SectionCategories";
 import { Link } from "react-router-dom";
-import { useFetch } from "./hooks/useFetch/useFetch";
+import useFetch from "./hooks/useFetch/useFetch";
+
+
 
 
 const useStyles = makeStyles(styles);
