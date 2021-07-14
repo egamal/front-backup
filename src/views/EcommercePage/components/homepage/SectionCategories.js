@@ -8,10 +8,10 @@ import getGridContent from 'views/EcommercePage/helpers/getGridContent';
 
 const useStyles = makeStyles(styles);
 
-export default function SectionCategories({ loading, categories = [] }) {
+export default function SectionCategories({ categories = [] }) {
   const classes = useStyles();
 
-  const gridContent = getGridContent(loading, categories, CategoryItem, 'name');
+  const gridContent = getGridContent(false, categories, CategoryItem, 'name');
 
   return (
     <div className={classes.container}>

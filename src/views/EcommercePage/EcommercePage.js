@@ -30,9 +30,10 @@ import logoFooter from "assets/img/ecommerce/logo-foot.png";
 import afip from "assets/img/ecommerce/afip.jpg";
 
 import styles from "assets/jss/material-kit-pro-react/views/ecommerceStyle.js";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import useFetch from "./hooks/useFetch/useFetch";
-
+import { useDispatch, useSelector } from "react-redux";
+import { startLoadingCategories } from "./actions/categories.js";
 
 
 
@@ -44,9 +45,15 @@ export default function EcommercePage() {
     document.body.scrollTop = 0;
   });
 
+  const dispatch = useDispatch();
+  const categories = useSelector( state => state.categories);
+
   const {data, loading} = useFetch('/api/v1/home-page');
   
-
+  React.useEffect(() => {
+      dispatch(startLoadingCategories());
+  }, []);
+  
   const classes = useStyles();
   return (
     <div>
@@ -88,11 +95,12 @@ export default function EcommercePage() {
       </Parallax>
 
       <div className={classNames(classes.main, classes.mainRaised)}>
+        <Link to='/product-list'>Productos</Link>
         <SectionLatestOffers loading={loading} highlightProducts={data?.highlightProducts} />
         <SectionProducts />
       </div>
       {/* CATEGORIAS ACA */}
-      <SectionCategories loading={loading} categories={data?.categories} />
+      <SectionCategories categories={categories} />
       <div
         className={classNames(
           classes.subscribeLine,
