@@ -33,8 +33,6 @@ const useStyles = makeStyles(styles);
 export default function ProductListPage() {
   const [checked, setChecked] = React.useState([1, 9, 27]);
 
-  console.log(checked)
-
   const { loading, data: products } = useFetch('/api/v1/products');
 
   const handleToggle = (value) => {
@@ -49,7 +47,7 @@ export default function ProductListPage() {
   };
   const classes = useStyles();
 
-  const gridContent = getGridContent(loading, products, ProductCard);
+  const gridContent = getGridContent(loading, products?.content, ProductCard);
 
   return (
     <div className={classes.backgroundWhite}>

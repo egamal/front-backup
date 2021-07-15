@@ -1,7 +1,6 @@
 {
   "name": "gennari-commerce",
   "version": "1.0.0",
-  "proxy": "http://localhost:8080",
   "private": true,
   "dependencies": {
     "@material-ui/core": "4.10.1",
@@ -19,11 +18,14 @@
     "react-dom": "16.13.1",
     "react-google-maps": "9.4.5",
     "react-image-gallery": "1.0.7",
+    "react-redux": "^7.2.4",
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.1",
     "react-slick": "0.26.1",
     "react-swipeable-views": "0.13.9",
-    "react-tagsinput": "3.19.0"
+    "react-tagsinput": "3.19.0",
+    "redux": "^4.1.0",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
