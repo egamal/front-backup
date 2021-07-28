@@ -27,21 +27,26 @@ import styles from 'assets/jss/material-kit-pro-react/views/ecommerceSections/pr
 import ProductCard from './components/ProductCard';
 import useFetch from './hooks/useFetch/useFetch';
 import getGridContent from './helpers/getGridContent';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles(styles);
 
 export default function ProductListPage() {
-  const [checked, setChecked] = React.useState([1, 9, 27]);
+  const [checked, setChecked] = React.useState([]);
+
+  const categories = useSelector( state => state.categories );
 
   const { loading, data: products } = useFetch('/api/v1/products');
 
+  console.log(products)
+
   const handleToggle = (value) => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-    if (currentIndex === -1) {
-      newChecked.push(value);
+    const contains = checked.includes(value)
+    let newChecked = [...checked];
+    if (contains) {
+      newChecked = newChecked.filter(c => c !== value)
     } else {
-      newChecked.splice(currentIndex, 1);
+      newChecked.push(value);
     }
     setChecked(newChecked);
   };
@@ -89,7 +94,7 @@ export default function ProductListPage() {
                     activeColor='rose'
                     collapses={[
                       {
-                        title: 'Categories',
+                        title: 'Categorias',
                         content: (
                           <div className={classes.customExpandPanel}>
                             <div
@@ -99,193 +104,34 @@ export default function ProductListPage() {
                                 classes.checkboxAndRadioHorizontal
                               }
                             >
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    disableRipple
-                                    tabIndex={-1}
-                                    onClick={() => handleToggle(27)}
-                                    checked={
-                                      checked.indexOf(27) !== -1 ? true : false
-                                    }
-                                    checkedIcon={
-                                      <Check className={classes.checkedIcon} />
-                                    }
-                                    icon={
-                                      <Check
-                                        className={classes.uncheckedIcon}
-                                      />
-                                    }
-                                    classes={{
-                                      checked: classes.checked,
-                                      root: classes.checkRoot,
-                                    }}
-                                  />
-                                }
-                                classes={{ label: classes.label }}
-                                label='All'
-                              />
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    disableRipple
-                                    tabIndex={-1}
-                                    onClick={() => handleToggle(28)}
-                                    checkedIcon={
-                                      <Check className={classes.checkedIcon} />
-                                    }
-                                    icon={
-                                      <Check
-                                        className={classes.uncheckedIcon}
-                                      />
-                                    }
-                                    classes={{
-                                      checked: classes.checked,
-                                      root: classes.checkRoot,
-                                    }}
-                                  />
-                                }
-                                classes={{ label: classes.label }}
-                                label='Black'
-                              />
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    disableRipple
-                                    tabIndex={-1}
-                                    onClick={() => handleToggle(29)}
-                                    checkedIcon={
-                                      <Check className={classes.checkedIcon} />
-                                    }
-                                    icon={
-                                      <Check
-                                        className={classes.uncheckedIcon}
-                                      />
-                                    }
-                                    classes={{
-                                      checked: classes.checked,
-                                      root: classes.checkRoot,
-                                    }}
-                                  />
-                                }
-                                classes={{ label: classes.label }}
-                                label='Blue'
-                              />
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    disableRipple
-                                    tabIndex={-1}
-                                    onClick={() => handleToggle(30)}
-                                    checkedIcon={
-                                      <Check className={classes.checkedIcon} />
-                                    }
-                                    icon={
-                                      <Check
-                                        className={classes.uncheckedIcon}
-                                      />
-                                    }
-                                    classes={{
-                                      checked: classes.checked,
-                                      root: classes.checkRoot,
-                                    }}
-                                  />
-                                }
-                                classes={{ label: classes.label }}
-                                label='Brown'
-                              />
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    disableRipple
-                                    tabIndex={-1}
-                                    onClick={() => handleToggle(31)}
-                                    checkedIcon={
-                                      <Check className={classes.checkedIcon} />
-                                    }
-                                    icon={
-                                      <Check
-                                        className={classes.uncheckedIcon}
-                                      />
-                                    }
-                                    classes={{
-                                      checked: classes.checked,
-                                      root: classes.checkRoot,
-                                    }}
-                                  />
-                                }
-                                classes={{ label: classes.label }}
-                                label='Gray'
-                              />
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    disableRipple
-                                    tabIndex={-1}
-                                    onClick={() => handleToggle(32)}
-                                    checkedIcon={
-                                      <Check className={classes.checkedIcon} />
-                                    }
-                                    icon={
-                                      <Check
-                                        className={classes.uncheckedIcon}
-                                      />
-                                    }
-                                    classes={{
-                                      checked: classes.checked,
-                                      root: classes.checkRoot,
-                                    }}
-                                  />
-                                }
-                                classes={{ label: classes.label }}
-                                label='Green'
-                              />
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    disableRipple
-                                    tabIndex={-1}
-                                    onClick={() => handleToggle(33)}
-                                    checkedIcon={
-                                      <Check className={classes.checkedIcon} />
-                                    }
-                                    icon={
-                                      <Check
-                                        className={classes.uncheckedIcon}
-                                      />
-                                    }
-                                    classes={{
-                                      checked: classes.checked,
-                                      root: classes.checkRoot,
-                                    }}
-                                  />
-                                }
-                                classes={{ label: classes.label }}
-                                label='Neutrals'
-                              />
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    disableRipple
-                                    tabIndex={-1}
-                                    onClick={() => handleToggle(34)}
-                                    checkedIcon={
-                                      <Check className={classes.checkedIcon} />
-                                    }
-                                    icon={
-                                      <Check
-                                        className={classes.uncheckedIcon}
-                                      />
-                                    }
-                                    classes={{
-                                      checked: classes.checked,
-                                      root: classes.checkRoot,
-                                    }}
-                                  />
-                                }
-                                classes={{ label: classes.label }}
-                                label='Purple'
-                              />
+                              {
+                                categories.map((cat) => (
+                                <FormControlLabel
+                                  key={cat.code}
+                                  control={
+                                    <Checkbox
+                                      disableRipple
+                                      tabIndex={-1}
+                                      onClick={() => handleToggle(cat.code)}
+                                      checkedIcon={
+                                        <Check className={classes.checkedIcon} />
+                                      }
+                                      icon={
+                                        <Check
+                                          className={classes.uncheckedIcon}
+                                        />
+                                      }
+                                      classes={{
+                                        checked: classes.checked,
+                                        root: classes.checkRoot,
+                                      }}
+                                    />
+                                  }
+                                  classes={{ label: classes.label }}
+                                  label={cat.name}
+                                />
+                                ))
+                              }
                             </div>
                           </div>
                         ),
@@ -306,7 +152,7 @@ export default function ProductListPage() {
                       { text: 'PREV' },
                       { active: true, text: 1 },
                       { text: 2 },
-                      {  text: 3 },
+                      { text: 3 },
                       { text: 4 },
                       { text: 5 },
                       { text: 'NEXT' },

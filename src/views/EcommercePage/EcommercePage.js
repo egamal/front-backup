@@ -32,8 +32,7 @@ import afip from "assets/img/ecommerce/afip.jpg";
 import styles from "assets/jss/material-kit-pro-react/views/ecommerceStyle.js";
 import { Link } from "react-router-dom";
 import useFetch from "./hooks/useFetch/useFetch";
-import { useDispatch, useSelector } from "react-redux";
-import { startLoadingCategories } from "./actions/categories.js";
+import { useSelector } from "react-redux";
 
 
 
@@ -45,15 +44,10 @@ export default function EcommercePage() {
     document.body.scrollTop = 0;
   });
 
-  const dispatch = useDispatch();
   const categories = useSelector( state => state.categories);
 
   const {data, loading} = useFetch('/api/v1/home-page');
-  
-  React.useEffect(() => {
-      dispatch(startLoadingCategories());
-  }, []);
-  
+    
   const classes = useStyles();
   return (
     <div>
