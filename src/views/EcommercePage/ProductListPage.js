@@ -27,29 +27,36 @@ import styles from 'assets/jss/material-kit-pro-react/views/ecommerceSections/pr
 import ProductCard from './components/ProductCard';
 import useFetch from './hooks/useFetch/useFetch';
 import getGridContent from './helpers/getGridContent';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { startLoadingCategories } from './actions/categories';
 
 const useStyles = makeStyles(styles);
 
 export default function ProductListPage() {
-  const [checked, setChecked] = React.useState([]);
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(startLoadingCategories());
+  }, [dispatch]);
 
   const categories = useSelector( state => state.categories );
 
+  const [selectedCategories, setSelectedCategories] = React.useState({});
+
+  React.useEffect(() => {
+    const categoriesFilter = Object.fromEntries(categories.map((cat) => [cat.code, false]));
+    setSelectedCategories(categoriesFilter)
+  }, [categories])
+
   const { loading, data: products } = useFetch('/api/v1/products');
 
-  console.log(products)
-
   const handleToggle = (value) => {
-    const contains = checked.includes(value)
-    let newChecked = [...checked];
-    if (contains) {
-      newChecked = newChecked.filter(c => c !== value)
-    } else {
-      newChecked.push(value);
-    }
-    setChecked(newChecked);
+    setSelectedCategories({
+      ...selectedCategories,
+      [value]: !selectedCategories[value],
+    });
   };
+  
   const classes = useStyles();
 
   const gridContent = getGridContent(loading, products?.content, ProductCard);
