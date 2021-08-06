@@ -4,18 +4,10 @@ import { createBrowserHistory } from 'history';
 
 import EcommercePage from '../EcommercePage';
 import ProductListPage from '../ProductListPage';
-import { useDispatch } from 'react-redux';
-import { startLoadingCategories } from '../actions/categories';
 
 const history = createBrowserHistory();
 
 export default function AppRouter() {
-  const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    dispatch(startLoadingCategories());
-  }, [dispatch]);
-
   return (
     <Router history={history}>
       <div>
