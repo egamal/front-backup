@@ -29,11 +29,14 @@ import useFetch from './hooks/useFetch/useFetch';
 import getGridContent from './helpers/getGridContent';
 import { useSelector, useDispatch } from 'react-redux';
 import { startLoadingCategories } from './actions/categories';
+import { useParams } from 'react-router-dom';
 
 const useStyles = makeStyles(styles);
 
 export default function ProductListPage() {
   const dispatch = useDispatch();
+
+  const {categoryCode} = useParams();
 
   React.useEffect(() => {
     dispatch(startLoadingCategories());
@@ -48,7 +51,9 @@ export default function ProductListPage() {
     setSelectedCategories(categoriesFilter)
   }, [categories])
 
-  const { loading, data: products } = useFetch('/api/v1/products');
+  const url = categoryCode ? `/api/v1/products?search=category:${categoryCode}` : '/api/v1/products'
+
+  const { loading, data: products } =  useFetch(url);
 
   const handleToggle = (value) => {
     setSelectedCategories({

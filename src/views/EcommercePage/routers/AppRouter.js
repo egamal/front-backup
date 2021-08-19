@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Router, Switch } from 'react-router-dom';
+import { Redirect, Route, Router, Switch } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
 import EcommercePage from '../EcommercePage';
@@ -12,8 +12,9 @@ export default function AppRouter() {
     <Router history={history}>
       <div>
         <Switch>
-          <Route exact path='/product-list' component={ProductListPage} />
+          <Route exact path={['/product-list', '/product-list/:categoryCode']} component={ProductListPage} />
           <Route exact path='/' component={EcommercePage} />
+          <Redirect to="/" />
         </Switch>
       </div>
     </Router>
