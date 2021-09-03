@@ -29,37 +29,35 @@ import useFetch from './hooks/useFetch/useFetch';
 import getGridContent from './helpers/getGridContent';
 import { useSelector, useDispatch } from 'react-redux';
 import { startLoadingCategories } from './actions/categories';
-import { useParams } from 'react-router-dom';
+import { filterCategories, filterCategory } from './actions/filters';
 
 const useStyles = makeStyles(styles);
 
 export default function ProductListPage() {
   const dispatch = useDispatch();
 
-  const {categoryCode} = useParams();
-
   React.useEffect(() => {
     dispatch(startLoadingCategories());
-  }, [dispatch]);
+  },[dispatch]);
 
   const categories = useSelector( state => state.categories );
 
-  const [selectedCategories, setSelectedCategories] = React.useState({});
+  const filters = useSelector((state) => state.filters)
+
 
   React.useEffect(() => {
     const categoriesFilter = Object.fromEntries(categories.map((cat) => [cat.code, false]));
-    setSelectedCategories(categoriesFilter)
-  }, [categories])
+    dispatch(filterCategories(categoriesFilter))
+  }, [categories, filters, dispatch])
 
-  const url = categoryCode ? `/api/v1/products?search=category:${categoryCode}` : '/api/v1/products'
+  const categoryCodeFilter = Object.entries(filters.categories).filter(el => el[1]).map(el2 => el2[0]);
+  
+  const url = categoryCodeFilter.length > 0 ? `/api/v1/products?search=category*${categoryCodeFilter.toString()}` : '/api/v1/products'
 
   const { loading, data: products } =  useFetch(url);
 
   const handleToggle = (value) => {
-    setSelectedCategories({
-      ...selectedCategories,
-      [value]: !selectedCategories[value],
-    });
+    dispatch(filterCategory(value));
   };
   
   const classes = useStyles();
@@ -124,7 +122,8 @@ export default function ProductListPage() {
                                     <Checkbox
                                       disableRipple
                                       tabIndex={-1}
-                                      onClick={() => handleToggle(cat.code)}
+                                      onChange={() => handleToggle(cat.code)}
+                                      checked={categoryCodeFilter.includes(cat.code)}
                                       checkedIcon={
                                         <Check className={classes.checkedIcon} />
                                       }
