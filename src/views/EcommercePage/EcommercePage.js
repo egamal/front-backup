@@ -34,6 +34,7 @@ import { Link } from "react-router-dom";
 import useFetch from "./hooks/useFetch/useFetch";
 import { useSelector, useDispatch } from "react-redux";
 import { startLoadingCategories } from "./actions/categories.js";
+import { clearFilter, filterCategories } from './actions/filters';
 
 
 
@@ -48,11 +49,20 @@ export default function EcommercePage() {
 
   const dispatch = useDispatch();
 
+
   React.useEffect(() => {
+    dispatch(clearFilter());
     dispatch(startLoadingCategories());
   }, [dispatch]);
 
   const categories = useSelector( state => state.categories);
+
+  const filters = useSelector((state) => state.filters)
+
+  React.useEffect(() => {
+    const categoriesFilter = Object.fromEntries(categories.map((cat) => [cat.code, false]));
+    dispatch(filterCategories(categoriesFilter));
+  }, [categories, filters, dispatch]);
 
   const {data, loading} = useFetch('/api/v1/home-page');
     
