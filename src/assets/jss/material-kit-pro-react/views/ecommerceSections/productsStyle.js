@@ -99,6 +99,9 @@ const styles = {
   },
   widthAuto: {
     width: "auto",
+  },
+  center: {
+    justifyContent: "center",
   }
 };
 
