@@ -81,9 +81,7 @@ export default function ProductListPage() {
   const renderPagination = (totalPages = 0, currentPage) => {
     const pages = [];
     for (let i = 1; i <= totalPages; i++) {
-      currentPage === i
-        ? pages.push({ text: i, active: true, onClick: () => setActivePage(i) })
-        : pages.push({ text: i, onClick: () => setActivePage(i) });
+      pages.push({ text: i, active: currentPage === i, onClick: () => setActivePage(i) })
     }
     if (products?.content.length > 0) {
       return (
