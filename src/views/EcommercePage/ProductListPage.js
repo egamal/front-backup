@@ -44,6 +44,7 @@ export default function ProductListPage() {
 
   const filters = useSelector((state) => state.filters)
 
+  const [activePage, setActivePage] = React.useState(1)
 
   React.useEffect(() => {
     const categoriesFilter = Object.fromEntries(categories.map((cat) => [cat.code, false]));
@@ -52,17 +53,52 @@ export default function ProductListPage() {
 
   const categoryCodeFilter = Object.entries(filters.categories).filter(el => el[1]).map(el2 => el2[0]);
   
-  const url = categoryCodeFilter.length > 0 ? `/api/v1/products?search=category*${categoryCodeFilter.toString()}` : '/api/v1/products'
+  const url = categoryCodeFilter.length > 0 ? 
+    `/api/v1/products?search=category*${categoryCodeFilter.toString()}&page=${activePage - 1}` : 
+    `/api/v1/products?page=${activePage - 1}`;
 
   const { loading, data: products } =  useFetch(url);
 
   const handleToggle = (value) => {
+    setActivePage(1);
     dispatch(filterCategory(value));
   };
-  
-  const classes = useStyles();
 
+  const handlePrevPage = () => {
+    if(!products.first){
+      setActivePage(activePage - 1)
+    }
+  }
+ 
+  const handleNextPage = () => {
+    if(!products.last){
+      setActivePage(activePage + 1)
+    }
+  }  
+  
   const gridContent = getGridContent(loading, products?.content, ProductCard);
+
+  const renderPagination = (totalPages = 0, currentPage) => {
+    const pages = [];
+    for (let i = 1; i <= totalPages; i++) {
+      pages.push({ text: i, active: currentPage === i, onClick: () => setActivePage(i) })
+    }
+    if (products?.content.length > 0) {
+      return (
+        <Pagination
+          className={classes.center}
+          pages={[
+            { text: 'PREV', onClick: handlePrevPage },
+            ...pages,
+            { text: 'NEXT', onClick: handleNextPage },
+          ]}
+          color='info'
+        />
+      );
+    }
+  };
+
+  const classes = useStyles();
 
   return (
     <div className={classes.backgroundWhite}>
@@ -156,20 +192,9 @@ export default function ProductListPage() {
               <GridContainer>
                 {gridContent}
                 <GridItem
-                  className={classNames(classes.mlAuto, classes.mrAuto, classes.widthAuto)}
+                  className={classNames(classes.mlAuto, classes.mrAuto)}
                 >
-                  <Pagination
-                    pages={[
-                      { text: 'PREV' },
-                      { active: true, text: 1 },
-                      { text: 2 },
-                      { text: 3 },
-                      { text: 4 },
-                      { text: 5 },
-                      { text: 'NEXT' },
-                    ]}
-                    color='info'
-                  />
+                  {renderPagination(products?.totalPages, activePage)}
                 </GridItem>
               </GridContainer>
             </GridItem>
