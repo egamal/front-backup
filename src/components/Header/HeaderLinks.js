@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React from "react";
+import React, { useState } from "react";
 // nodejs library to set properties for components
 import PropTypes from "prop-types";
 // react components for routing our app without refresh
@@ -21,13 +21,26 @@ import LoginModal from "components/LoginModal/LoginModal.js";
 import RegisterModal from "components/RegisterModal/RegisterModal.js";
 
 import styles from "assets/jss/material-kit-pro-react/components/headerLinksStyle.js";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles(styles);
 
 export default function HeaderLinks(props) {
+
+  const products = useSelector( state => state.shoppingCart );
+  const [quantity, setQuantity] = useState(0)
+
   const classes = useStyles();
   const [loginModal, setLoginModal] = React.useState(false);
   const [registerModal, setRegisterModal] = React.useState(false);
+
+  React.useEffect(() => {
+    let totalQuantity = 0;
+    for(const prod in products){
+      totalQuantity += products[prod].quantity
+    }
+    setQuantity(totalQuantity)
+  }, [products]);
 
   const onRegister = () => {
     setLoginModal(false);
@@ -48,17 +61,17 @@ export default function HeaderLinks(props) {
         </Button>
       </ListItem>
       <ListItem className={classes.listItem + " " + classes.shoppingCart}>
-        <Button
-          href="https://www.creative-tim.com/product/material-kit-pro-react?ref=mkpr-navbar"
-          color="info"
-          target="_blank"
-          className={classes.navButton + " " + classes.shoppingCartButton}
-          justIcon
-          round
-        >
-          <span className={classes.shoppingCartItems}>0</span>
-          <ShoppingCart className={classes.icons + " " + classes.shoppingCartIcon} />
-        </Button>
+        <Link to={'/shopping-cart'}>
+          <Button
+            color="info"
+            className={classes.navButton + " " + classes.shoppingCartButton}
+            justIcon
+            round
+          >
+            <span className={classes.shoppingCartItems}>{quantity}</span>
+            <ShoppingCart className={classes.icons + " " + classes.shoppingCartIcon} />
+          </Button>
+        </Link>
       </ListItem>
       <LoginModal opened={loginModal} setOpen={setLoginModal} onRegister={onRegister}/>
       <RegisterModal opened={registerModal} setOpen={setRegisterModal}/>
