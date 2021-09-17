@@ -86,7 +86,7 @@ export default function ProductListPage() {
           <h2>Find what you need</h2>
           <GridContainer>
             <GridItem md={3} sm={3}>
-              <ProductListFilter setActivePage={filterSetActivePage}/>
+              <ProductListFilter onFilter={filterSetActivePage}/>
             </GridItem>
             <GridItem md={9} sm={9}>
               <GridContainer>

@@ -24,7 +24,7 @@ import { filterCategory } from 'views/EcommercePage/actions/filters';
 
 const useStyles = makeStyles(styles);
 
-export default function ProductListFilter({setActivePage}) {
+export default function ProductListFilter({onFilter}) {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -45,7 +45,7 @@ export default function ProductListFilter({setActivePage}) {
   const categoryCodeFilter = Object.entries(filters.categories).filter(el => el[1]).map(el2 => el2[0]);
 
   const handleToggle = (value) => {
-    setActivePage();
+    onFilter();
     dispatch(filterCategory(value));
   };
 
