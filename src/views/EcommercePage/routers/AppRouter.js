@@ -4,6 +4,7 @@ import { createBrowserHistory } from 'history';
 
 import EcommercePage from '../EcommercePage';
 import ProductListPage from '../ProductListPage';
+import ShoppingCartPage from '../ShoppingCartPage';
 
 const history = createBrowserHistory();
 
@@ -13,6 +14,7 @@ export default function AppRouter() {
       <div>
         <Switch>
           <Route exact path={'/product-list'} component={ProductListPage} />
+          <Route exact path={'/shopping-cart'} component={ShoppingCartPage} />
           <Route exact path='/' component={EcommercePage} />
           <Redirect to="/" />
         </Switch>

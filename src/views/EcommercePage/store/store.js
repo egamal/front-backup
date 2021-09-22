@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 
 import categoriesReducer from '../reducers/categoriesReducer';
 import filtersReducer from '../reducers/filtersReducer';
+import shoppingCartReducer from '../reducers/shoppingCartReducer';
 
 const composeEnhancers =
   (typeof window !== 'undefined' &&
@@ -12,6 +13,7 @@ const composeEnhancers =
 const reducers = combineReducers({
   categories: categoriesReducer,
   filters: filtersReducer,
+  shoppingCart: shoppingCartReducer,
 });
 
 export const store = createStore(
