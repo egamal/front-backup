@@ -29,7 +29,7 @@ export default function ProductCard({ imageUri, name, price, size, description }
   const [snackbarIsOpen, setSnackbarIsOpen] = React.useState(false);
 
   const handleAddProduct = () => {
-    dispatch(addProduct({[name]:{imageUri, price, quantity: 1}}));
+    dispatch(addProduct({[name]:{imageUri, price, quantity: 1, size}}));
     setSnackbarIsOpen(true)
   }
 
