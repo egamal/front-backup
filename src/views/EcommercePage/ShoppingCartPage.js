@@ -1,14 +1,10 @@
 /*eslint-disable*/
-import React from "react";
+import React, { useState } from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-import Tooltip from "@material-ui/core/Tooltip";
 // @material-ui/icons
-import Close from "@material-ui/icons/Close";
-import Remove from "@material-ui/icons/Remove";
-import Add from "@material-ui/icons/Add";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 // core components
 import Header from "components/Header/Header.js";
@@ -23,9 +19,9 @@ import CardBody from "components/Card/CardBody.js";
 
 import shoppingCartStyle from "assets/jss/material-kit-pro-react/views/shoppingCartStyle.js";
 
-import product1 from "assets/img/product1.jpg";
 import FooterCommerce from "./components/FooterCommerce";
 import { useSelector } from "react-redux";
+import getShoppingCartProducts from "./helpers/getShoppingCartProducts";
 
 const useStyles = makeStyles(shoppingCartStyle);
 
@@ -33,68 +29,22 @@ export default function ShoppingCartPage() {
 
   const products = useSelector( state => state.shoppingCart );
 
-  React.useEffect(() => {
-    window.scrollTo(0, 0);
-    document.body.scrollTop = 0;
-  });
-  const classes = useStyles();
+  const [total, setTotal] = useState(0)
 
-  const renderProducts = (products) => {
-    const productList = [];
+  // React.useEffect(() => {
+  //   window.scrollTo(0, 0);
+  //   document.body.scrollTop = 0;
+  // });
+
+  React.useEffect(() => {
+    let subTotal = 0; 
     for(const product in products){
-      productList.push(
-       [<div className={classes.imgContainer} key={product}>
-          <img src={products[product].imageUri} alt="..." className={classes.img} />
-        </div>,
-        <span key={product}>
-          <a href="#jacket" className={classes.tdNameAnchor}>
-            {product}
-          </a>
-          <br />
-        </span>,
-        `${products[product].size}`,
-        <span key={product}>
-          <small className={classes.tdNumberSmall}>$</small> {products[product].price}
-        </span>,
-        <span key={product}>
-          {`${products[product].quantity} `}
-          <div className={classes.buttonGroup}>
-            <Button
-              color="info"
-              size="sm"
-              round
-              className={classes.firstButton}
-            >
-              <Remove />
-            </Button>
-            <Button
-              color="info"
-              size="sm"
-              round
-              className={classes.lastButton}
-            >
-              <Add />
-            </Button>
-          </div>
-        </span>,
-        <span key={product}>
-          <small className={classes.tdNumberSmall}>$</small> {products[product].price * products[product].quantity}
-        </span>,
-        <Tooltip
-          key={product}
-          id="close1"
-          title="Remove item"
-          placement="left"
-          classes={{ tooltip: classes.tooltip }}
-        >
-          <Button link className={classes.actionButton}>
-            <Close />
-          </Button>
-        </Tooltip>
-      ])
+      subTotal += products[product].price * products[product].quantity
     }
-    return productList;
-  }
+    setTotal(subTotal)
+  }, [products]);
+
+  const classes = useStyles();
 
   return (
     <div>
@@ -146,24 +96,28 @@ export default function ShoppingCartPage() {
                   ""
                 ]}
                 tableData={[
-                  ...renderProducts(products),
+                  ...getShoppingCartProducts(products),
                   {
                     purchase: true,
-                    colspan: "3",
+                    colspan: '3',
                     amount: (
                       <span>
-                        <small>€</small>2,346
+                        <small>$</small>
+                        {total}
                       </span>
                     ),
                     col: {
                       colspan: 3,
-                      text: (
-                        <Button color="info" round>
-                          Complete Purchase <KeyboardArrowRight />
-                        </Button>
-                      )
-                    }
-                  }
+                      text:
+                        total < 2000 ? (
+                          (<span>Compra Minima $2000</span>)
+                        ) : (
+                          <Button color='info' round>
+                            Completar Compra <KeyboardArrowRight />
+                          </Button>
+                        ),
+                    },
+                  },
                 ]}
                 tableShopping
                 customHeadCellClasses={[
