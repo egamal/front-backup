@@ -31,11 +31,6 @@ export default function ShoppingCartPage() {
 
   const [total, setTotal] = useState(0)
 
-  // React.useEffect(() => {
-  //   window.scrollTo(0, 0);
-  //   document.body.scrollTop = 0;
-  // });
-
   React.useEffect(() => {
     let subTotal = 0; 
     for(const product in products){
@@ -110,7 +105,7 @@ export default function ShoppingCartPage() {
                       colspan: 3,
                       text:
                         total < 2000 ? (
-                          (<span>Compra Minima $2000</span>)
+                          (<p className={classes.minimum}>Compra Minima $2000</p>)
                         ) : (
                           <Button color='info' round>
                             Completar Compra <KeyboardArrowRight />

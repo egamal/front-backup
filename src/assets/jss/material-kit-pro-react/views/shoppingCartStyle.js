@@ -7,6 +7,7 @@ import {
   mrAuto,
   whiteColor,
   grayColor,
+  dangerColor,
   mlAuto
 } from "assets/jss/material-kit-pro-react.js";
 
@@ -119,7 +120,13 @@ const styles = {
   },
   textRight: {
     textAlign: "right"
-  }
+  },
+  minimum: {
+    margin: "0px",
+    fontWeight: "900",
+    color: dangerColor[0],
+    fontSize: "1.25rem",
+  },
 };
 
 export default styles;
